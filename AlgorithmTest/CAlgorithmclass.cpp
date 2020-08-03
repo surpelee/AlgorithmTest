@@ -6737,6 +6737,12 @@ vector<int> CAlgorithmclass::smallestRange(vector<vector<int>>& nums)
 	return {l,r};
 }
 
+string CAlgorithmclass::addStrings(string num1, string num2)
+{
+
+	return string();
+}
+
 
 
 

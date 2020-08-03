@@ -1267,6 +1267,7 @@ public:
 	int maxCoins2(vector<int>& nums);//戳气球
 	int splitArray(vector<int>& nums, int m);//分割数组的最大值
 	vector<int> smallestRange(vector<vector<int>>& nums);//最小区间
+	string addStrings(string num1, string num2);//字符串相加
 
 private:
 	int solve_maxCoins2(int l, int r);

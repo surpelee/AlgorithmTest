@@ -4,8 +4,6 @@
 #include "pch.h"
 #include <iostream>
 #include "CAlgorithmclass.h"
-
-#include <iostream>
 #include <vector>
 #include <string>
 #include <unordered_map>
@@ -57,11 +55,9 @@ vector<int> solve(int N, vector<vector<int>>& nums) {
 
 int main() {
 	int N = 2;
-	vector<vector<int>> nums = { {1,2,3,4,5,6},{1,2,6,5,3,4} };
-	vector<int> ans = solve(N, nums);
-	cout << ans.size() << endl;
-	for (int i = 0; i < ans.size(); ++i)
-		cout << ans[i] << " ";
+	CAlgorithmclass solve1;
+	vector<vector<int>> nums = {};
+	auto res = solve1.smallestRange(nums);
 	return 0;
 }
 
