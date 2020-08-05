@@ -1401,6 +1401,18 @@ void CAlgorithmclass::flatten(TreeNode * root)
 		}
 		root = root->right;
 	}
+	//递归
+	/*if (!root)
+		return;
+	flatten(root->left);
+	flatten(root->right);
+	TreeNode* tmp = root->left;
+	if (!tmp) return;
+	while (tmp->right)
+		tmp = tmp->right;
+	tmp->right = root->right;
+	root->right = root->left;
+	root->left = nullptr;*/
 }
 
 int CAlgorithmclass::numDistinct(string s, string t)
@@ -6739,8 +6751,51 @@ vector<int> CAlgorithmclass::smallestRange(vector<vector<int>>& nums)
 
 string CAlgorithmclass::addStrings(string num1, string num2)
 {
-
-	return string();
+	/*if (num1.size() > num2.size())
+		return addStrings(num2, num1);
+	reverse(num1.begin(), num1.end());
+	reverse(num2.begin(), num2.end());
+	int cnt = 0;
+	string ans = "";
+	for (int i = 0; i < num1.size(); ++i) {
+		int res = num1[i] - '0' + num2[i] - '0' + cnt;
+		if (res > 9)
+			cnt = res / 10;
+		else
+			cnt = 0;
+		res %= 10;
+		ans = to_string(res) + ans;
+	}
+	if (num2.size() == num1.size()) {
+		if(cnt)
+			ans = to_string(cnt) + ans;
+	}
+	else {
+		for (int i = num1.size(); i < num2.size(); ++i) {
+			int tmp = num2[i] - '0' + cnt;
+			if (tmp > 9) cnt = tmp / 10;
+			else cnt = 0;
+			tmp %= 10;
+			ans = to_string(tmp) + ans;
+		}
+		if (cnt) ans = to_string(cnt) + ans;
+	}
+	return ans;*/
+	//
+	int i = num1.length() - 1, j = num2.length() - 1, add = 0;
+	string ans = "";
+	while (i >= 0 || j >= 0 || add != 0) {
+		int x = i >= 0 ? num1[i] - '0' : 0;
+		int y = j >= 0 ? num2[j] - '0' : 0;
+		int result = x + y + add;
+		ans.push_back('0' + result % 10);
+		add = result / 10;
+		i -= 1;
+		j -= 1;
+	}
+	// 计算完以后的答案需要翻转过来
+	reverse(ans.begin(), ans.end());
+	return ans;
 }
 
 

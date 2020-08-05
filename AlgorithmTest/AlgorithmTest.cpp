@@ -53,11 +53,28 @@ vector<int> solve(int N, vector<vector<int>>& nums) {
 	return ans;
 }
 
+vector<int> finMax(const vector<int>& nums) {
+	vector<int> ans(nums.size(), 0);
+	ans[nums.size() - 1] = INT_MAX;
+	stack<int> s;
+	s.push(nums[nums.size() - 1]);
+	for (int i = nums.size() - 2; i >= 0; --i) {
+		while (!s.empty() && s.top() <= nums[i]) {
+			s.pop();
+		}
+		ans[i] = s.top();
+		s.push(nums[i]);
+	}
+	return ans;
+}
+
 int main() {
 	int N = 2;
 	CAlgorithmclass solve1;
-	vector<vector<int>> nums = {};
-	auto res = solve1.smallestRange(nums);
+	vector<int> nums = {3,2,1,5,4,3,1,2,6};
+	auto t = finMax(nums);
+	string a = "9999", b = "123";
+	auto res = solve1.addStrings(a,b);
 	return 0;
 }
 
