@@ -1268,8 +1268,10 @@ public:
 	int splitArray(vector<int>& nums, int m);//分割数组的最大值
 	vector<int> smallestRange(vector<vector<int>>& nums);//最小区间
 	string addStrings(string num1, string num2);//字符串相加
+	vector<vector<int>> palindromePairs(vector<string>& words);//回文对
 
 private:
+	bool isPalindrome(string& a,string& b);
 	int solve_maxCoins2(int l, int r);
 	void back_findTargetSumWays(vector<int>& nums, int a, int S, int sum);
 	void back_pathSum3(TreeNode* root, int sum, int level, vector<int> &temp);

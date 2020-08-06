@@ -68,11 +68,81 @@ vector<int> finMax(const vector<int>& nums) {
 	return ans;
 }
 
+class WordBook
+{
+public:
+	WordBook() {
+		Loction = -1;
+		memset(ch, 0, sizeof(ch));
+	}
+	
+	void insertNode(string& s, int Loc) {
+		WordBook* node = this;
+		for (int i = 0; i < s.size(); ++i){
+			int x = s[i] - 'a';
+			if (node->ch[x] == nullptr) {
+				node->ch[x] = new WordBook();
+			}
+			node = node->ch[x];
+		}
+		node->Loction = Loc;
+	}
+
+	int findNode(string& s,int i,int j) {
+		WordBook* node = this;
+		for (int k = j; k >= i; --k) {
+			int x = s[k] - 'a';
+			if (node->ch[x] == nullptr)
+				return -1;
+			node = node->ch[x];
+		}
+		return node->Loction;
+	}
+
+private:
+	int Loction;
+	WordBook* ch[26];
+};
+
+bool isPalindrom(string& s,int l,int r) {
+	int len = r - l + 1;
+	for (int i = 0; i < len/2; ++i) {
+		if (s[i + l] != s[r - i]) return false;
+	}
+	return true;
+}
+
+vector<vector<int>> palindromePairs(vector<string>& words) {
+	vector<vector<int>> ans;
+	WordBook* root = new WordBook();
+	for (int i = 0;i<words.size();++i)
+		root->insertNode(words[i],i);
+	for (int i = 0; i < words.size(); ++i) {
+		int len = words[i].size();
+		for (int j = 0; j <= len; ++j) {
+			if (isPalindrom(words[i], j, len - 1)) {
+				int leftId = root->findNode(words[i], 0, j - 1);
+				if (leftId != i && leftId != -1)
+					ans.push_back({ i,leftId });
+			}
+			if (j && isPalindrom(words[i], 0, j - 1)) {
+				int rightId = root->findNode(words[i], j, len - 1);
+				if (rightId != i && rightId != -1)
+					ans.push_back({ rightId,i });
+			}
+		}
+	}
+	return ans;
+}
+
+
 int main() {
+	vector<string> words = { "abcd","dcba","lls","s","sssll" };
+	vector<vector<int>> ans = palindromePairs(words);
+
 	int N = 2;
 	CAlgorithmclass solve1;
 	vector<int> nums = {3,2,1,5,4,3,1,2,6};
-	auto t = finMax(nums);
 	string a = "9999", b = "123";
 	auto res = solve1.addStrings(a,b);
 	return 0;

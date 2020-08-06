@@ -6798,6 +6798,20 @@ string CAlgorithmclass::addStrings(string num1, string num2)
 	return ans;
 }
 
+vector<vector<int>> CAlgorithmclass::palindromePairs(vector<string>& words)
+{
+	vector<vector<int>> ans;
+	for (int i = 0;i<words.size();++i)
+	{
+		for (int j = 0; j < words.size(); ++j)
+		{
+			if (i == j) continue;
+			if (isPalindrome(words[i], words[j]))
+				ans.push_back({ i,j });
+		}
+	}
+	return ans;
+}
 
 
 
@@ -6805,6 +6819,19 @@ string CAlgorithmclass::addStrings(string num1, string num2)
 
 
 
+
+
+bool CAlgorithmclass::isPalindrome(string & a, string & b)
+{
+	string sum = a + b;
+	int sSize = sum.size();
+	for (int i = 0; i < sSize / 2; ++i)
+	{
+		if (sum[i] != sum[sSize - i - 1])
+			return false;
+	}
+	return true;
+}
 
 int CAlgorithmclass::solve_maxCoins2(int l, int r)
 {
