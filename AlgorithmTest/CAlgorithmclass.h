@@ -1269,6 +1269,7 @@ public:
 	vector<int> smallestRange(vector<vector<int>>& nums);//最小区间
 	string addStrings(string num1, string num2);//字符串相加
 	vector<vector<int>> palindromePairs(vector<string>& words);//回文对
+	int longestPalindromeSubseq(string s);//最长回文子序列
 
 private:
 	bool isPalindrome(string& a,string& b);
