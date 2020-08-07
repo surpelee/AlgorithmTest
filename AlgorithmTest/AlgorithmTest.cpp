@@ -143,8 +143,8 @@ int main() {
 	int N = 2;
 	CAlgorithmclass solve1;
 	vector<int> nums = {3,2,1,5,4,3,1,2,6};
-	string a = "9999", b = "123";
-	auto res = solve1.addStrings(a,b);
+	string a = "baaabcb";
+	auto res = solve1.longestSubstring(a,3);
 	return 0;
 }
 

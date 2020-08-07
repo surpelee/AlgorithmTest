@@ -1270,6 +1270,7 @@ public:
 	string addStrings(string num1, string num2);//字符串相加
 	vector<vector<int>> palindromePairs(vector<string>& words);//回文对
 	int longestPalindromeSubseq(string s);//最长回文子序列
+	int longestSubstring(string s, int k);//至少有K个重复字符的最长子串   //字符串递归分治
 
 private:
 	bool isPalindrome(string& a,string& b);

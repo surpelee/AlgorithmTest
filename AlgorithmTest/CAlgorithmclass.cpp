@@ -6830,6 +6830,32 @@ int CAlgorithmclass::longestPalindromeSubseq(string s)
 	return dp[0][len - 1];
 }
 
+int CAlgorithmclass::longestSubstring(string s, int k)
+{
+	int ans = 0;
+	vector<int> aMap(26,0);
+	for (const auto& c : s) {
+		int t = c - 'a';
+		aMap[t]++;
+	}
+	vector<int> splitStr;
+	for (int i = 0; i < s.size(); ++i) {
+		if (aMap[s[i] - 'a'] < k)
+			splitStr.push_back(i);
+	}
+	if (splitStr.size() == 0) return s.size();
+	splitStr.push_back(s.size());
+	int left = 0;
+	for (int i = 0; i < splitStr.size(); ++i) {
+		int len = splitStr[i] - left;
+		if(len > ans) ans = max(ans,longestSubstring(s.substr(left, len), k));
+		left = splitStr[i] + 1;
+	}
+	return ans;
+}
+
+
+
 
 
 
