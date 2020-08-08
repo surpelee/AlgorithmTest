@@ -1085,11 +1085,9 @@ void CAlgorithmclass::recoverTree(TreeNode * root)
 			root = s.top();
 			s.pop();
 			if (fir && fir->val >= root->val) {
-				if (one == NULL) {
+				if (one == NULL) 
 					one = fir;
-					two = root;
-				}
-				else two = root;
+				two = root;
 			}
 			fir = root;
 			root = root->right;

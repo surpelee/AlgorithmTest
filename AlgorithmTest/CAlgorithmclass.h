@@ -43,7 +43,9 @@ struct TreeNode {
 	int val;
 	TreeNode* left;
 	TreeNode* right;
+	TreeNode() : val(0),left(NULL),right(NULL){}
 	TreeNode(int x) :val(x), left(NULL), right(NULL) {}
+	TreeNode(int x, TreeNode* l, TreeNode* r) : val(x),left(l),right(r){}
 };
 
 struct DoubleListNode {
