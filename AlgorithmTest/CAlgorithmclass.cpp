@@ -7322,6 +7322,20 @@ void CAlgorithmclass::back_IpAddresses(string s, int n, string segment)
 	}
 }
 
+void CAlgorithmclass::back_IpAddresses2(string& s, int k, int a, string res) {
+	if (k >= 4) {
+		if (a >= s.size())
+			m_strVt.push_back(res);
+		return;
+	}
+	for (int i = a; i < s.size(); ++i) {
+		string str = s.substr(a, i - a + 1);
+		int tmp = stoi(str);
+		if (tmp > 255 || i - a + 1 != to_string(tmp).size()) break;
+		back_IpAddresses2(s, k + 1, i + 1, res + (i == s.size() - 1 ? str : str + '.'));
+	}
+}
+
 void CAlgorithmclass::middle_order(TreeNode * root)
 {
 	if (root == NULL)

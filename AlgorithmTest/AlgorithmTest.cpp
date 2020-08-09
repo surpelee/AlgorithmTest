@@ -10,49 +10,6 @@
 
 using namespace std;
 
-bool helper(vector<int>& a, vector<int>& b) {
-	unordered_map<int, int> amap;
-	for (int i = 0; i < 6; ++i)
-		amap[a[i]] = i;
-	int change = 0;
-	int rev = 0;
-	for (int i = 0; i < 6; i += 2) {
-		int t = amap[b[i]];
-		if (t % 2 == 0) {
-			if (a[t + 1] != b[i + 1])
-				return false;
-			if (t != i)
-				change++;
-		}
-		else {
-			if (a[t - 1] != b[i + 1])
-				return false;
-			change++;
-			rev++;
-		}
-	}
-	return (change / 2 + rev) % 2 ? false : true;
-}
-
-vector<int> solve(int N, vector<vector<int>>& nums) {
-	vector<int> ans;
-	vector<bool> visit(N, false);
-	for (int i = 0; i < N; ++i) {
-		if (visit[i]) continue;
-		visit[i] = true;
-		int res = 1;
-		for (int j = i + 1; j < N; ++j) {
-			if (visit[j]) continue;
-			if (helper(nums[i], nums[j])) {
-				visit[j] = true;
-				res++;
-			}
-		}
-		ans.push_back(res);
-	}
-	return ans;
-}
-
 vector<int> finMax(const vector<int>& nums) {
 	vector<int> ans(nums.size(), 0);
 	ans[nums.size() - 1] = INT_MAX;
@@ -137,6 +94,7 @@ vector<vector<int>> palindromePairs(vector<string>& words) {
 
 
 int main() {
+
 	vector<string> words = { "abcd","dcba","lls","s","sssll" };
 	vector<vector<int>> ans = palindromePairs(words);
 

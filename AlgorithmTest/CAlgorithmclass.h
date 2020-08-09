@@ -1299,6 +1299,7 @@ private:
 	void DFS_shudu(int i, int j, vector<vector<char>>& board);//解数独
 	void backsubsetsWithDup(vector<int>& nums, vector<int>& temp, int a);
 	void back_IpAddresses(string s, int n, string segment);
+	void back_IpAddresses2(string & s, int k, int a, string res);
 	void middle_order(TreeNode* root);//中序遍历
 	vector<TreeNode*> back_generateTrees(int start, int end);
 	int back_numTrees(int start, int end);
