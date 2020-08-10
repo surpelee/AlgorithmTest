@@ -1273,6 +1273,7 @@ public:
 	vector<vector<int>> palindromePairs(vector<string>& words);//回文对
 	int longestPalindromeSubseq(string s);//最长回文子序列
 	int longestSubstring(string s, int k);//至少有K个重复字符的最长子串   //字符串递归分治
+	int countBinarySubstrings(string s);//重复出现的子串 计算他们出现的次数
 
 private:
 	bool isPalindrome(string& a,string& b);

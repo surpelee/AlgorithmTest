@@ -6852,6 +6852,50 @@ int CAlgorithmclass::longestSubstring(string s, int k)
 	return ans;
 }
 
+int CAlgorithmclass::countBinarySubstrings(string s)
+{
+	//³¬Ê±
+	/*int sSize = s.size();
+	vector<int> dp(sSize, 0);
+	for (int i = 1; i < sSize; ++i) {
+		if (s[i] != s[i - 1])
+			dp[i] = dp[i - 1] + 1;
+		else {
+			int j = i;
+			while (j > 0 && s[j] == s[j - 1]) {
+				--j;
+			}
+			int tmp = i - j + 1;
+			if (j - tmp >= 0) {
+				string a = s.substr(j - tmp, tmp);
+				string b = s.substr(j, tmp);
+				bool id = false;
+				for (int k = 0; k < tmp; ++k) {
+					if (a[k] == b[k]) id = true;
+				}
+				if (!id) dp[i] = dp[i - 1] + 1;
+			}
+		}
+		if (!dp[i]) dp[i] = dp[i - 1];
+	}
+	return dp[sSize - 1];*/
+	//¼ÆÊý
+	int sSize = s.size();
+	int cur = 1, pre = 0, ans = 0;
+	for (int i = 1; i < sSize; ++i) {
+		if (s[i] == s[i - 1]) {
+			++cur;
+		}
+		else {
+			pre = cur;
+			cur = 1;
+		}
+		if (pre >= cur)
+			ans++;
+	}
+	return ans;
+}
+
 
 
 

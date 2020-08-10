@@ -101,12 +101,12 @@ int main() {
 	int N = 2;
 	CAlgorithmclass solve1;
 	vector<int> nums = {3,2,1,5,4,3,1,2,6};
-	string a = "baaabcb";
+	string a = "00110";
 	TreeNode* root = new TreeNode(1);
 	root->left = new TreeNode(3);
 	root->left->right = new TreeNode(2);
 
-	/*auto res = */solve1.recoverTree(root);
+	auto res = solve1.countBinarySubstrings(a);
 	return 0;
 }
 
