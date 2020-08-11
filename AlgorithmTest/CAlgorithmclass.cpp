@@ -8647,6 +8647,20 @@ int clionGitHub::kthSmallest(vector<vector<int>> &matrix, int k) {
 	q.push(node(now.x,now.y + 1,matrix[now.x][now.y + 1]));
 	}
 	return q.top().val;*/
+	/*int n = matrix.size();
+	priority_queue<int, vector<int>, less<int>> q;
+	for (int i = 0; i < n; ++i) {
+		for (int j = 0; j < n; ++j) {
+			if (q.size() >= k && q.top() > matrix[i][j]) {
+				q.pop();
+				q.push(matrix[i][j]);
+			}
+			else if (q.size() < k) {
+				q.push(matrix[i][j]);
+			}
+		}
+	}
+	return q.top();*/
 	//¶þ·Ö²éÕÒ
 	int n = matrix.size();
 	int l = matrix[0][0], r = matrix[n - 1][n - 1];

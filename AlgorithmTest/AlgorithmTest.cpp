@@ -32,10 +32,10 @@ public:
 		Loction = -1;
 		memset(ch, 0, sizeof(ch));
 	}
-	
+
 	void insertNode(string& s, int Loc) {
 		WordBook* node = this;
-		for (int i = 0; i < s.size(); ++i){
+		for (int i = 0; i < s.size(); ++i) {
 			int x = s[i] - 'a';
 			if (node->ch[x] == nullptr) {
 				node->ch[x] = new WordBook();
@@ -45,7 +45,7 @@ public:
 		node->Loction = Loc;
 	}
 
-	int findNode(string& s,int i,int j) {
+	int findNode(string& s, int i, int j) {
 		WordBook* node = this;
 		for (int k = j; k >= i; --k) {
 			int x = s[k] - 'a';
@@ -61,9 +61,9 @@ private:
 	WordBook* ch[26];
 };
 
-bool isPalindrom(string& s,int l,int r) {
+bool isPalindrom(string& s, int l, int r) {
 	int len = r - l + 1;
-	for (int i = 0; i < len/2; ++i) {
+	for (int i = 0; i < len / 2; ++i) {
 		if (s[i + l] != s[r - i]) return false;
 	}
 	return true;
@@ -72,8 +72,8 @@ bool isPalindrom(string& s,int l,int r) {
 vector<vector<int>> palindromePairs(vector<string>& words) {
 	vector<vector<int>> ans;
 	WordBook* root = new WordBook();
-	for (int i = 0;i<words.size();++i)
-		root->insertNode(words[i],i);
+	for (int i = 0; i < words.size(); ++i)
+		root->insertNode(words[i], i);
 	for (int i = 0; i < words.size(); ++i) {
 		int len = words[i].size();
 		for (int j = 0; j <= len; ++j) {
@@ -92,15 +92,46 @@ vector<vector<int>> palindromePairs(vector<string>& words) {
 	return ans;
 }
 
+void helper(vector<vector<char>>& board, vector<vector<int>>& dir, int i, int j) {
+	board[i][j] = '#';
+	for (int k = 0; k < 4; ++k) {
+		int ti = dir[k][0] + i;
+		int tj = dir[k][1] + j;
+		if (ti < 0 || tj < 0 || ti >= board.size() || tj >= board[0].size() || board[ti][tj] != 'O') continue;
+		helper(board, dir, ti, tj);
+	}
+}
+
+void solve(vector<vector<char>>& board) {
+	if (board.empty()) return;
+	int m = board.size(), n = board[0].size();
+	vector<vector<int>> dir = { {-1,0},{0,-1},{1,0},{0,1} };
+	for (int i = 0; i < m; ++i) {
+		if (board[i][0] == 'O') helper(board, dir, i, 0);
+		if (board[i][n - 1] == 'O') helper(board, dir, i, n - 1);
+	}
+	for (int i = 0; i < n; ++i) {
+		if (board[0][i] == 'O') helper(board, dir, 0, i);
+		if (board[n - 1][i] == 'O') helper(board, dir, n - 1, i);
+	}
+	for (int i = 0; i < m; ++i) {
+		for (int j = 0; j < n; ++j) {
+			if (board[i][j] == 'O') board[i][j] = 'X';
+			if (board[i][j] == '#') board[i][j] = 'O';
+		}
+	}
+	return;
+}
 
 int main() {
 
-	vector<string> words = { "abcd","dcba","lls","s","sssll" };
-	vector<vector<int>> ans = palindromePairs(words);
+	vector<vector<char>> words = { {'X', 'O', 'X', 'O', 'X', 'O'},{'O', 'X', 'O', 'X', 'O', 'X'},{'X', 'O','X', 'O', 'X', 'O'},{'O', 'X', 'O', 'X', 'O', 'X'} };
+	solve(words);
+	return 0;
 
 	int N = 2;
 	CAlgorithmclass solve1;
-	vector<int> nums = {3,2,1,5,4,3,1,2,6};
+	vector<int> nums = { 3,2,1,5,4,3,1,2,6 };
 	string a = "00110";
 	TreeNode* root = new TreeNode(1);
 	root->left = new TreeNode(3);
@@ -109,6 +140,7 @@ int main() {
 	auto res = solve1.countBinarySubstrings(a);
 	return 0;
 }
+
 
 
 

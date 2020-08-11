@@ -964,6 +964,46 @@ public:
 		root->count = root->left->count + root->right->count;
 	}
 };
+//常数时间插入、删除和获取随机元素
+class RandomizedSet {
+public:
+	/** Initialize your data structure here. */
+	RandomizedSet() {
+		res.clear();
+		IndexMap.clear();
+	}
+
+	/** Inserts a value to the set. Returns true if the set did not already contain the specified element. */
+	bool insert(int val) {
+		if (IndexMap.find(val) != IndexMap.end()) return false;
+		res.push_back(val);
+		IndexMap[val] = res.size() - 1;
+		return true;
+	}
+
+	/** Removes a value from the set. Returns true if the set contained the specified element. */
+	bool remove(int val) {
+		if (IndexMap.find(val) == IndexMap.end()) return false;
+		int len = res.size();
+		int tmp = IndexMap[val];
+		IndexMap[res[len - 1]] = tmp;
+		IndexMap.erase(val);
+		swap(res[tmp], res[res.size() - 1]);
+		res.pop_back();
+		return true;
+	}
+
+	/** Get a random element from the set. */
+	int getRandom() {
+		int len = res.size();
+		int num = rand() % len;
+		return res[num];
+	}
+
+private:
+	unordered_map<int, int> IndexMap;
+	vector<int> res;
+};
 
 namespace clionGitHub {
 	int threeSumClosest(vector<int>& nums, int target);
