@@ -6896,6 +6896,52 @@ int CAlgorithmclass::countBinarySubstrings(string s)
 	return ans;
 }
 
+int CAlgorithmclass::getSum(int a, int b)
+{
+	while (b) {
+		auto carry = ((unsigned int)(a & b)) << 1;
+		a ^= b;
+		b = carry;
+	}
+	return a;
+}
+
+vector<vector<int>> CAlgorithmclass::fourSum(vector<int>& nums, int target)
+{
+	if (nums.size() < 4 || nums.empty()) return vector<vector<int>>();
+	sort(nums.begin(), nums.end());
+	if (nums[0] > 0) return vector<vector<int>>();
+	vector<vector<int>> ans;
+	int len = nums.size();
+	int l, r;
+	for (int i = 0; i < len - 3; ++i) {
+		if (target < nums[i] + nums[i + 1] + nums[i + 2] + nums[i + 3]) continue;
+		if (target > nums[len - 4] + nums[len - 1] + nums[len - 2] + nums[len - 3]) continue;
+		if (i > 0 && nums[i] == nums[i - 1]) continue;
+		for (int j = i + 1; j < len - 2; ++j) {
+			l = j + 1;
+			r = len - 1;
+			if (j > i + 1 && nums[j] == nums[j - 1]) continue;
+			if (target < nums[i] + nums[j] + nums[l] + nums[l + 1]) continue;
+			if (target > nums[i] + nums[j] + nums[len - 1] + nums[len - 2]) continue;
+			while (l < r) {
+				int tmp = nums[i] + nums[j] + nums[l] + nums[r];
+				if (tmp == target) {
+					vector<int> res = { nums[i],nums[j],nums[l],nums[r] };
+					ans.push_back(res);
+					while (l < r&&nums[l] == nums[l + 1]) ++l;
+					while (l < r&&nums[r] == nums[r - 1]) --r;
+					++l;
+					--r;
+				}
+				else if (tmp > target) --r;
+				else ++l;
+			}
+		}
+	}
+	return ans;
+}
+
 
 
 

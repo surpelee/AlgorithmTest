@@ -1314,6 +1314,8 @@ public:
 	int longestPalindromeSubseq(string s);//最长回文子序列
 	int longestSubstring(string s, int k);//至少有K个重复字符的最长子串   //字符串递归分治
 	int countBinarySubstrings(string s);//重复出现的子串 计算他们出现的次数
+	int getSum(int a, int b);//两整数之和
+	vector<vector<int>> fourSum(vector<int>& nums, int target);//四数之和
 
 private:
 	bool isPalindrome(string& a,string& b);
@@ -1451,6 +1453,8 @@ private:
 	2.n&(-n)	表示n和n的补码进行与运算,保留n的二进制最右边的1
 	3."^"	异或运算,相同值异或后位0
 	4.">>","<<"		右移和左移  分别表示n的二进制向右/左移几位,如果仅移1位相当于 n除2/乘2
+
+	在位运算中，a^b表示无法进位的相加，a&b左移以为就表示进位
 	*/
 };
 
