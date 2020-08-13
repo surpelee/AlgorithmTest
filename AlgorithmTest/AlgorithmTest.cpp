@@ -92,42 +92,8 @@ vector<vector<int>> palindromePairs(vector<string>& words) {
 	return ans;
 }
 
-void helper(vector<vector<char>>& board, vector<vector<int>>& dir, int i, int j) {
-	board[i][j] = '#';
-	for (int k = 0; k < 4; ++k) {
-		int ti = dir[k][0] + i;
-		int tj = dir[k][1] + j;
-		if (ti < 0 || tj < 0 || ti >= board.size() || tj >= board[0].size() || board[ti][tj] != 'O') continue;
-		helper(board, dir, ti, tj);
-	}
-}
-
-void solve(vector<vector<char>>& board) {
-	if (board.empty()) return;
-	int m = board.size(), n = board[0].size();
-	vector<vector<int>> dir = { {-1,0},{0,-1},{1,0},{0,1} };
-	for (int i = 0; i < m; ++i) {
-		if (board[i][0] == 'O') helper(board, dir, i, 0);
-		if (board[i][n - 1] == 'O') helper(board, dir, i, n - 1);
-	}
-	for (int i = 0; i < n; ++i) {
-		if (board[0][i] == 'O') helper(board, dir, 0, i);
-		if (board[n - 1][i] == 'O') helper(board, dir, n - 1, i);
-	}
-	for (int i = 0; i < m; ++i) {
-		for (int j = 0; j < n; ++j) {
-			if (board[i][j] == 'O') board[i][j] = 'X';
-			if (board[i][j] == '#') board[i][j] = 'O';
-		}
-	}
-	return;
-}
 
 int main() {
-
-	vector<vector<char>> words = { {'X', 'O', 'X', 'O', 'X', 'O'},{'O', 'X', 'O', 'X', 'O', 'X'},{'X', 'O','X', 'O', 'X', 'O'},{'O', 'X', 'O', 'X', 'O', 'X'} };
-	solve(words);
-	return 0;
 
 	int N = 2;
 	CAlgorithmclass solve1;
@@ -137,7 +103,8 @@ int main() {
 	root->left = new TreeNode(3);
 	root->left->right = new TreeNode(2);
 
-	auto res = solve1.countBinarySubstrings(a);
+	long long aaaa = 123456789 * 987654321;
+	auto res = solve1.multiply("123456789","987654321");
 	return 0;
 }
 

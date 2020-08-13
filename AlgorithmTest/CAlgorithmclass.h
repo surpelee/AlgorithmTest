@@ -1316,6 +1316,8 @@ public:
 	int countBinarySubstrings(string s);//重复出现的子串 计算他们出现的次数
 	int getSum(int a, int b);//两整数之和
 	vector<vector<int>> fourSum(vector<int>& nums, int target);//四数之和
+	int longestValidParentheses(string s);//最长有效括号
+	string multiply(string num1, string num2);//字符串相乘
 
 private:
 	bool isPalindrome(string& a,string& b);

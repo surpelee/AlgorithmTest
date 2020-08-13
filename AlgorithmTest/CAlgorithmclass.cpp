@@ -6942,6 +6942,58 @@ vector<vector<int>> CAlgorithmclass::fourSum(vector<int>& nums, int target)
 	return ans;
 }
 
+int CAlgorithmclass::longestValidParentheses(string s)
+{
+	int ans = 0;
+	stack<int> si;
+	si.push(-1);
+	for (int i = 0; i < s.size(); ++i) {
+		if (si.top() == -1) {
+			si.push(i);
+		}
+		else if (s[i] == ')' && s[si.top()] == '(') {
+			si.pop();
+			ans = max(ans, i - si.top());
+		}
+		else si.push(i);
+	}
+	return ans;
+}
+
+string CAlgorithmclass::multiply(string num1, string num2)
+{
+	if (num1.size() < num2.size())
+		return multiply(num2, num1);
+	if (num1[0] == '0' || num2[0] == '0') return "0";
+	string str;
+	for (int i = num2.size() - 1; i >= 0; --i) {
+		int xs = num2[i] - '0';
+		int add = 0;
+		string s;
+		for (int k = num2.size() - 1; k > i; --k) s += '0';
+		for (int j = num1.size() - 1; j >= 0; --j) {
+			int sx = num1[j] - '0';
+			int res = sx * xs + add;
+			add = res / 10;
+			s = (char)(res % 10 + '0') + s;
+		}
+		if (add) s = (char)(add + '0') + s;
+		if (i == num2.size() - 1) {
+			str = s;
+			continue;
+		}
+		while (s.size() > str.size()) str = '0' + str;
+		int add_p = 0;
+		for (int p = str.size() - 1 - i; p >= 0; --p) {
+			int res = (str[p] - '0') + (s[p] - '0') + add_p;
+			add_p = res / 10;
+			str[p] = (char)(res % 10 + '0');
+		}
+		if (add_p) str = (char)(add_p + '0') + str;
+	}
+	return str;
+}
+
 
 
 
