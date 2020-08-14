@@ -92,8 +92,24 @@ vector<vector<int>> palindromePairs(vector<string>& words) {
 	return ans;
 }
 
+bool isValid(string s) {
+	stack<char> sc;
+	unordered_map<char, char> amap = { {')','('},{'}','{'},{']','['} };
+	for (int i = 0; i < s.size(); ++i) {
+		if (sc.empty()) {
+			sc.push(s[i]);
+		}
+		else if (amap[s[i]] == sc.top()) {
+			sc.pop();
+		}
+		else sc.push(s[i]);
+	}
+	return sc.empty() ? true : false;
+}
 
 int main() {
+
+	auto sc = isValid("((()()(())))");
 
 	int N = 2;
 	CAlgorithmclass solve1;
@@ -103,7 +119,6 @@ int main() {
 	root->left = new TreeNode(3);
 	root->left->right = new TreeNode(2);
 
-	long long aaaa = 123456789 * 987654321;
 	auto res = solve1.multiply("123456789","987654321");
 	return 0;
 }
