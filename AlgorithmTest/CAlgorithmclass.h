@@ -1318,8 +1318,10 @@ public:
 	vector<vector<int>> fourSum(vector<int>& nums, int target);//四数之和
 	int longestValidParentheses(string s);//最长有效括号
 	string multiply(string num1, string num2);//字符串相乘
+	int removeBoxes(vector<int>& boxes);//移除盒子
 
 private:
+	int back_removeBoxs(vector<int>& boxes, int l, int r,int k,vector<vector<vector<int>>>& dp);
 	bool isPalindrome(string& a,string& b);
 	int solve_maxCoins2(int l, int r);
 	void back_findTargetSumWays(vector<int>& nums, int a, int S, int sum);

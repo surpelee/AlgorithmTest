@@ -92,33 +92,65 @@ vector<vector<int>> palindromePairs(vector<string>& words) {
 	return ans;
 }
 
-bool isValid(string s) {
-	stack<char> sc;
-	unordered_map<char, char> amap = { {')','('},{'}','{'},{']','['} };
-	for (int i = 0; i < s.size(); ++i) {
-		if (sc.empty()) {
-			sc.push(s[i]);
-		}
-		else if (amap[s[i]] == sc.top()) {
-			sc.pop();
-		}
-		else sc.push(s[i]);
+int ans = 0;
+
+void solve(int blood,vector<int>& skill) {
+	if (blood <= 0) {
+		if (blood == 0) ++ans;
+		return;
 	}
-	return sc.empty() ? true : false;
+	for (int i = 0; i < 2; ++i) {
+		solve(blood - skill[i], skill);
+	}
+}
+
+int solve1(int blood, vector<int>& skill) {
+	vector<int> dp(blood + 1,0);
+	for (int i = 1; i <= blood; ++i) {
+		for (int j = 0;j < skill.size();++j){
+			if(i >= skill[j])
+				dp[i] = max(dp[i],dp[i - skill[j]] + 1);
+		}
+	}
+	return dp[blood];
+}\
+
+struct TreeInt {
+	int l, r, len;
+	TreeInt() :l(0), r(0), len(0) {}
+	TreeInt(int _l, int _r, int _len) :l(_l), r(_r), len(_len) {}
+	bool operator < (const TreeInt& osg) const {
+		return this->len < osg.len;
+	}
+};
+
+TreeInt center(string& s, int l, int r) {
+	while (l >= 0 && r < s.size() && s[l] == s[r]) {
+		--l;
+		++r;
+	}
+	TreeInt one(l, r, r - l - 1);
+	return one;
+}
+
+string longestPalindrome(string s) {
+	TreeInt ans;
+	for (int i = 0; i < s.size(); ++i) {
+		TreeInt one = center(s, i, i);
+		//ans = one.len > ans.len ? one : ans;
+		ans = one < ans ? ans : one;
+		TreeInt two = center(s, i, i + 1);
+		//ans = two.len > ans.len ? two : ans;
+		ans = two < ans ? ans : two;
+	}
+	return s.substr(ans.l + 1, ans.len);
 }
 
 int main() {
-
-	auto sc = isValid("((()()(())))");
-
-	int N = 2;
+	string s = "babad";
+	cout << longestPalindrome(s);
+	return 0;
 	CAlgorithmclass solve1;
-	vector<int> nums = { 3,2,1,5,4,3,1,2,6 };
-	string a = "00110";
-	TreeNode* root = new TreeNode(1);
-	root->left = new TreeNode(3);
-	root->left->right = new TreeNode(2);
-
 	auto res = solve1.multiply("123456789","987654321");
 	return 0;
 }
