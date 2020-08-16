@@ -7051,6 +7051,32 @@ int CAlgorithmclass::removeBoxes(vector<int>& boxes)
 	return back_removeBoxs(boxes,0,len - 1,0,dp);
 }
 
+vector<vector<int>> CAlgorithmclass::floodFill(vector<vector<int>>& image, int sr, int sc, int newColor)
+{
+	int n = image.size(),m = image[0].size();
+	int startColor = image[sr][sc];
+	vector<vector<int>> dir = { {-1,0},{0,-1},{1,0},{0,1} };
+	vector<vector<bool>> visit(n,vector<bool>(m, false));
+	queue<pair<int, int>> q;
+	q.push(make_pair(sr, sc));
+	visit[sr][sc] = true;
+	image[sr][sc] = newColor;
+	while (!q.empty()){
+		auto tmp = q.front();
+		q.pop();
+		for (int i = 0; i < 4; ++i) {
+			int tmp_sr = tmp.first + dir[i][0];
+			int tmp_sc = tmp.second + dir[i][1];
+			if (tmp_sr >= 0 && tmp_sc >= 0 && tmp_sr < n && tmp_sc < m && !visit[tmp_sr][tmp_sc] && image[tmp_sr][tmp_sc] == startColor) {
+				q.push(make_pair(tmp_sr, tmp_sc));
+				visit[tmp_sr][tmp_sc] = true;
+				image[tmp_sr][tmp_sc] = newColor;
+			}
+		}
+	}
+	return image;
+}
+
 
 
 

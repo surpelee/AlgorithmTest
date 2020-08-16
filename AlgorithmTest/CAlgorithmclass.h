@@ -1319,6 +1319,7 @@ public:
 	int longestValidParentheses(string s);//×î³¤ÓÐÐ§À¨ºÅ
 	string multiply(string num1, string num2);//×Ö·û´®Ïà³Ë
 	int removeBoxes(vector<int>& boxes);//ÒÆ³ýºÐ×Ó
+	vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int newColor);//Í¼ÏñäÖÈ¾
 
 private:
 	int back_removeBoxs(vector<int>& boxes, int l, int r,int k,vector<vector<vector<int>>>& dp);
