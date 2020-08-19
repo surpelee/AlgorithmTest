@@ -7111,6 +7111,58 @@ int CAlgorithmclass::countSubstrings(string s)
 	return ans;
 }
 
+int CAlgorithmclass::numWays(int n, vector<vector<int>>& relation, int k)
+{
+	vector<vector<int>> adj(n);
+	for (auto& r : relation) {
+		adj[r[0]].push_back(r[1]);
+	}
+	int ans = 0;
+	queue<pair<int,int>> q;
+	q.push(make_pair(0,1));
+	while (!q.empty()){
+		auto tmp = q.front();
+		q.pop();
+		if (tmp.second > k) return ans;
+		for (int i = 0; i < adj[tmp.first].size(); ++i) {
+			if (tmp.second == k && adj[tmp.first][i] == n - 1) ++ans;
+			else q.push(make_pair(adj[tmp.first][i],tmp.second + 1));
+		}
+	}
+	return 0;
+}
+
+vector<int> CAlgorithmclass::getTriggerTime(vector<vector<int>>& increase, vector<vector<int>>& requirements)
+{
+	int incSize = increase.size();
+	vector<vector<int>> inc(incSize + 1);
+	inc[0] = { 0,0,0 };
+	for (int i = 1; i <= incSize; ++i) {
+		inc[i] = { inc[i - 1][0] + increase[i - 1][0],inc[i - 1][1] + increase[i - 1][1],inc[i - 1][2] + increase[i - 1][2] };
+	}
+	int iMax = requirements.size();
+	vector<int> ans(iMax,iMax + 1);
+	for (int i = 0; i < requirements.size(); ++i) {
+		int l = 0, r = incSize;
+		for (int j = 0; j < 3; ++j) {
+			while (l < r) {
+				int mid = l + (r - l) / 2;
+				if (inc[mid][j] >= requirements[i][j])
+					r = mid;
+				else
+					l = mid + 1;
+			}
+			if (l == incSize && requirements[i][j] > inc[l][j]) {
+				ans[i] = -1;
+				break;
+			}
+			r = incSize;
+		}
+		if (ans[i] == iMax + 1) ans[i] = l;
+	}
+	return ans;
+}
+
 
 
 

@@ -1323,6 +1323,8 @@ public:
 	//vector<int> bonus(int n, vector<vector<int>>& leadership, vector<vector<int>>& operations);//发LeeCoin
 	int minCount(vector<int>& coins);//拿硬币
 	int countSubstrings(string s);//回文字符串
+	int numWays(int n, vector<vector<int>>& relation, int k);//传递信息
+	vector<int> getTriggerTime(vector<vector<int>>& increase, vector<vector<int>>& requirements);//触发剧情
 
 private:
 	int back_countSubstrings(string & s, int l, int r);

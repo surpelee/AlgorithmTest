@@ -149,8 +149,9 @@ string longestPalindrome(string s) {
 
 
 int main() {
+	vector<vector<int>> relation = { {0,2},{2,1},{3,4},{2,3},{1,4},{2,0},{0,4} };
 	CAlgorithmclass solve;
-
+	auto ans = solve.numWays(5,relation,3);
 	return 0;
 }
 
