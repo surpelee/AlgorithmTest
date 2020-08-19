@@ -146,12 +146,11 @@ string longestPalindrome(string s) {
 	return s.substr(ans.l + 1, ans.len);
 }
 
+
+
 int main() {
-	string s = "babad";
-	cout << longestPalindrome(s);
-	return 0;
-	CAlgorithmclass solve1;
-	auto res = solve1.multiply("123456789","987654321");
+	CAlgorithmclass solve;
+
 	return 0;
 }
 

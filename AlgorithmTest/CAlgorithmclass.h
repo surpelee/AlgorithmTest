@@ -1320,8 +1320,12 @@ public:
 	string multiply(string num1, string num2);//×Ö·û´®Ïà³Ë
 	int removeBoxes(vector<int>& boxes);//ÒÆ³ıºĞ×Ó
 	vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int newColor);//Í¼ÏñäÖÈ¾
+	//vector<int> bonus(int n, vector<vector<int>>& leadership, vector<vector<int>>& operations);//·¢LeeCoin
+	int minCount(vector<int>& coins);//ÄÃÓ²±Ò
+	int countSubstrings(string s);//»ØÎÄ×Ö·û´®
 
 private:
+	int back_countSubstrings(string & s, int l, int r);
 	int back_removeBoxs(vector<int>& boxes, int l, int r,int k,vector<vector<vector<int>>>& dp);
 	bool isPalindrome(string& a,string& b);
 	int solve_maxCoins2(int l, int r);

@@ -7077,6 +7077,39 @@ vector<vector<int>> CAlgorithmclass::floodFill(vector<vector<int>>& image, int s
 	return image;
 }
 
+int CAlgorithmclass::minCount(vector<int>& coins)
+{
+	int count = 0;
+	for (auto& n : coins)
+		count += (n + 1) / 2;
+	return count;
+}
+
+int CAlgorithmclass::countSubstrings(string s)
+{
+	//中心拓展
+	/*int ans = 0;
+	for (int i = 0; i < s.size(); ++i) {
+		ans += back_countSubstrings(s, i, i);
+		ans += back_countSubstrings(s, i, i + 1);
+	}
+	return ans;*/
+	//动态规划
+	int len = s.size();
+	int ans = 0;
+	vector<vector<bool>> dp(len, vector<bool>(len, false));
+	for (int i = 0; i < len; ++i) dp[i][i] = true;
+	for (int i = len - 1; i >= 0; --i) {
+		for (int j = i + 1; j < len; ++j) {
+			if (s[i] == s[j]) {
+				if (j - i == 1) dp[i][j] = true;
+				else dp[i][j] = dp[i + 1][j - 1];
+			}
+			if (dp[i][j]) ++ans;
+		}
+	}
+	return ans;
+}
 
 
 
@@ -7086,6 +7119,17 @@ vector<vector<int>> CAlgorithmclass::floodFill(vector<vector<int>>& image, int s
 
 
 
+
+
+int CAlgorithmclass::back_countSubstrings(string& s, int l, int r) {
+	int ans = 0;
+	while (l >= 0 && r < s.size() && s[l] == s[r]) {
+		++ans;
+		--l;
+		++r;
+	}
+	return ans;
+}
 
 int CAlgorithmclass::back_removeBoxs(vector<int>& boxes, int l, int r,int k,vector<vector<vector<int>>>& dp)
 {
