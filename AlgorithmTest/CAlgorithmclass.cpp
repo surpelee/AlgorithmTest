@@ -7163,6 +7163,51 @@ vector<int> CAlgorithmclass::getTriggerTime(vector<vector<int>>& increase, vecto
 	return ans;
 }
 
+vector<vector<char>> CAlgorithmclass::updateBoard(vector<vector<char>>& board, vector<int>& click)
+{
+	if (board[click[0]][click[1]] == 'M') {
+		board[click[0]][click[1]] = 'X';
+		return board;
+	}
+	vector<vector<int>> dir = { {-1,-1},{-1,0},{-1,1},{0,1},{1,1},{1,0},{1,-1},{0,-1} };
+	int m = board.size(), n = board[0].size();
+	vector<vector<bool>> visit(m,vector<bool>(n,false));
+
+	auto fun = [&](int a,int b) {
+		int bor = 0;
+		for (auto& d : dir) {
+			int di = d[0] + a;
+			int dj = d[1] + b;
+			if(di<0||dj<0||di>=m||dj>=n||visit[di][dj]||board[di][dj] != 'M') continue;
+			++bor;
+		}
+		if (bor) board[a][b] = (char)(bor + '0');
+		else board[a][b] = 'B';
+		return bor;
+	};
+
+	queue<pair<int, int>> q;
+	q.push(make_pair(click[0], click[1]));
+	visit[click[0]][click[1]] = true;
+	while (!q.empty()) {
+		auto tmp = q.front();
+		q.pop();
+		if(fun(tmp.first, tmp.second))
+			continue;
+		for (int i = 0; i < 8; ++i) {
+			int ti = tmp.first + dir[i][0];
+			int tj = tmp.second + dir[i][1];
+			if (ti < 0 || tj < 0 || ti >= m || tj >= n || visit[ti][tj]) {
+				continue;
+			}
+			q.push(make_pair(ti,tj));
+			visit[ti][tj] = true;
+			board[ti][tj] = 'B';
+		}
+	}
+	return board;
+}
+
 
 
 

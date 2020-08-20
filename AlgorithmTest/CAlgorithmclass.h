@@ -1325,6 +1325,7 @@ public:
 	int countSubstrings(string s);//回文字符串
 	int numWays(int n, vector<vector<int>>& relation, int k);//传递信息
 	vector<int> getTriggerTime(vector<vector<int>>& increase, vector<vector<int>>& requirements);//触发剧情
+	vector<vector<char>> updateBoard(vector<vector<char>>& board, vector<int>& click);//扫雷游戏
 
 private:
 	int back_countSubstrings(string & s, int l, int r);
