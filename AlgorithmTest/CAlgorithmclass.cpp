@@ -7208,6 +7208,47 @@ vector<vector<char>> CAlgorithmclass::updateBoard(vector<vector<char>>& board, v
 	return board;
 }
 
+bool CAlgorithmclass::repeatedSubstringPattern(string s)
+{
+	//暴力
+	/*vector<int> hash(26, 0);
+	string tmp;
+	for (int i = 0; i < s.size(); ++i) {
+		int index = s[i] - 'a';
+		if (hash[index]) {
+			tmp = s.substr(0, i);
+			int j = i;
+			int tSize = i;
+			while (j + tSize <= s.size() && tmp == s.substr(j,tSize)) {
+				j += tSize;
+			}
+			if (j == s.size()) return true;
+		}
+		hash[index]++;
+	}
+	return false;*/
+	//调用库函数
+	/*return (s + s).find(s, 1) != s.size();*/
+	//KMP
+	auto fun = [&](string& s,string& t) {
+		int sSize = s.size(), tSize = t.size();
+		vector<int> next(tSize,0);
+		for (int i = 1, k = 0; i < tSize; ++i) {
+			while (k > 0 && t[i] != t[k]) k = next[k - 1];
+			if (t[i] == t[k]) ++k;
+			next[i] = k;
+		}
+		for (int i = 0, k = 0; i < sSize; ++i) {
+			while (k > 0 && s[i] != t[k]) k = next[k - 1];
+			if (s[i] == t[k]) ++k;
+			if (k == tSize) return true;
+		}
+		return false;
+	};
+	string ss = (s + s).substr(1);
+	return fun(ss,s);
+}
+
 
 
 
