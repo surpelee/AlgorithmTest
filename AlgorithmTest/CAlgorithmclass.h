@@ -1327,8 +1327,10 @@ public:
 	vector<int> getTriggerTime(vector<vector<int>>& increase, vector<vector<int>>& requirements);//触发剧情
 	vector<vector<char>> updateBoard(vector<vector<char>>& board, vector<int>& click);//扫雷游戏
 	bool repeatedSubstringPattern(string s);//重复的子字符串
+	vector<vector<int>> findSubsequences(vector<int>& nums);//递增子序列
 
 private:
+	void back_findSubsequences(vector<int>& nums, vector<int>& tmp, int cur, int pro);
 	int back_countSubstrings(string & s, int l, int r);
 	int back_removeBoxs(vector<int>& boxes, int l, int r,int k,vector<vector<vector<int>>>& dp);
 	bool isPalindrome(string& a,string& b);

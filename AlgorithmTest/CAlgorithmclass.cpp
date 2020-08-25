@@ -7249,6 +7249,12 @@ bool CAlgorithmclass::repeatedSubstringPattern(string s)
 	return fun(ss,s);
 }
 
+vector<vector<int>> CAlgorithmclass::findSubsequences(vector<int>& nums)
+{
+	vector<int> tmp;
+	back_findSubsequences(nums, tmp, 0, INT_MIN);
+	return m_intVtVt;
+}
 
 
 
@@ -7258,6 +7264,23 @@ bool CAlgorithmclass::repeatedSubstringPattern(string s)
 
 
 
+
+
+void CAlgorithmclass::back_findSubsequences(vector<int>& nums,vector<int>& tmp,int cur,int pro)
+{
+	if (cur == nums.size()) {
+		if (tmp.size() > 1)
+			m_intVtVt.push_back(tmp);
+		return;
+	}
+	if (nums[cur] >= pro) {
+		tmp.push_back(nums[cur]);
+		back_findSubsequences(nums, tmp, cur + 1, nums[cur]);
+		tmp.pop_back();
+	}
+	if (nums[cur] != pro)
+		back_findSubsequences(nums, tmp, cur + 1, pro);
+}
 
 int CAlgorithmclass::back_countSubstrings(string& s, int l, int r) {
 	int ans = 0;
