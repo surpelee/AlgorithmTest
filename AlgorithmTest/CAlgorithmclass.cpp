@@ -7256,6 +7256,15 @@ vector<vector<int>> CAlgorithmclass::findSubsequences(vector<int>& nums)
 	return m_intVtVt;
 }
 
+vector<string> CAlgorithmclass::letterCombinations(string digits)
+{
+	if (!digits.size()) return {};
+	vector<string> hash = { "abc","def","ghi","jkl","mno","pqrs","tuv","wxyz" };
+	vector<string> ans;
+	string tmp;
+	back_letterCombinations(ans,hash,digits,tmp,0);
+	return ans;
+}
 
 
 
@@ -7265,6 +7274,20 @@ vector<vector<int>> CAlgorithmclass::findSubsequences(vector<int>& nums)
 
 
 
+
+
+
+void CAlgorithmclass::back_letterCombinations(vector<string>& ans, vector<string>& hash, string& digits, string tmp,int a)
+{
+	if (a == digits.size()) {
+		ans.push_back(tmp);
+		return;
+	}
+	string str = hash[digits[a] - '2'];
+	for (int i = 0; i < str.size(); ++i) {
+		back_letterCombinations(ans,hash,digits,tmp + str[i],a + 1);
+	}
+}
 
 void CAlgorithmclass::back_findSubsequences(vector<int>& nums,vector<int>& tmp,int cur,int pro)
 {
