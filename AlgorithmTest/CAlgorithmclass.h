@@ -1329,8 +1329,11 @@ public:
 	bool repeatedSubstringPattern(string s);//重复的子字符串
 	vector<vector<int>> findSubsequences(vector<int>& nums);//递增子序列
 	vector<string> letterCombinations(string digits);//电话号码的字母组合
+	int findCircleNum(vector<vector<int>>& M);//朋友圈
 
 private:
+	void back_findCircleNum1(vector<vector<int>>& M, vector<bool>& visit, int a);
+	int back_findCircleNum(vector<int>& res, int i);
 	void back_letterCombinations(vector<string>& ans,vector<string>& hash,string& digits,string tmp,int a);
 	void back_findSubsequences(vector<int>& nums, vector<int>& tmp, int cur, int pro);
 	int back_countSubstrings(string & s, int l, int r);

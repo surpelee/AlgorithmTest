@@ -7266,6 +7266,40 @@ vector<string> CAlgorithmclass::letterCombinations(string digits)
 	return ans;
 }
 
+int CAlgorithmclass::findCircleNum(vector<vector<int>>& M)
+{
+	//并查集
+	/*int nums = M.size();
+	vector<int> res(nums, -1);
+	for (int i = 0; i < nums; ++i) res[i] = i;
+	for (int i = 0; i < nums; ++i) {
+		for (int j = i + 1; j < nums; ++j) {
+			if (!M[i][j]) continue;
+			int a = back_findCircleNum(res, i);
+			int b = back_findCircleNum(res, j);
+			res[a] = b;
+		}
+	}
+	vector<bool> isFriend(nums, false);
+	for (int i = 0; i < nums; ++i) {
+		isFriend[back_findCircleNum(res,i)] = true;
+	}
+	int ans = 0;
+	for (int i = 0; i < nums; ++i)
+		if (isFriend[i]) ++ans;
+	return ans;*/
+	//深度优先
+	int n = M.size();
+	int ans = 0;
+	vector<bool> visit(n,false);
+	for (int i = 0; i < n; ++i) {
+		if (visit[i]) continue;
+		++ans;
+		visit[i] = true;
+		back_findCircleNum1(M, visit, i);
+	}
+	return ans;
+}
 
 
 
@@ -7276,6 +7310,27 @@ vector<string> CAlgorithmclass::letterCombinations(string digits)
 
 
 
+
+
+void CAlgorithmclass::back_findCircleNum1(vector<vector<int>>& M, vector<bool>& visit,int a)
+{
+	if (a == M.size()) {
+		return;
+	}
+	for (int i = 0; i < M.size(); ++i) {
+		if (visit[i] || !M[a][i]) continue;
+		visit[i] = true;
+		back_findCircleNum1(M, visit, i);
+	}
+	return ;
+}
+
+int CAlgorithmclass::back_findCircleNum(vector<int>& res,int i)
+{
+	if (res[i] != i)
+		res[i] = back_findCircleNum(res, res[i]);
+	return res[i];
+}
 
 void CAlgorithmclass::back_letterCombinations(vector<string>& ans, vector<string>& hash, string& digits, string tmp,int a)
 {
