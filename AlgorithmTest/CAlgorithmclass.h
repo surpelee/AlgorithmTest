@@ -1330,6 +1330,8 @@ public:
 	vector<vector<int>> findSubsequences(vector<int>& nums);//递增子序列
 	vector<string> letterCombinations(string digits);//电话号码的字母组合
 	int findCircleNum(vector<vector<int>>& M);//朋友圈
+	int minJump(vector<int>& jump);//最小跳跃次数
+	bool canVisitAllRooms(vector<vector<int>>& rooms);//钥匙和房间
 
 private:
 	void back_findCircleNum1(vector<vector<int>>& M, vector<bool>& visit, int a);

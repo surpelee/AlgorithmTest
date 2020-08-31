@@ -7301,6 +7301,41 @@ int CAlgorithmclass::findCircleNum(vector<vector<int>>& M)
 	return ans;
 }
 
+int CAlgorithmclass::minJump(vector<int>& jump)
+{
+	int len = jump.size();
+	vector<int> dp(len, 0);
+	dp[len - 1] = 1;
+	for (int i = len - 2; i >= 0; --i) {
+		dp[i] = i + jump[i] >= len ? 1 : dp[jump[i] + i] + 1;
+		for (int j = i + 1; j < len && dp[j] >= dp[i] + 1; ++j) {
+			dp[j] = dp[i] + 1;
+		}
+	}
+	return dp[0];
+}
+
+bool CAlgorithmclass::canVisitAllRooms(vector<vector<int>>& rooms)
+{
+	int n = rooms.size();
+	vector<bool> visit(n, false);
+	queue<int> q;
+	q.push(0);
+	while (!q.empty()) {
+		int tmp = q.front();
+		q.pop();
+		if(visit[tmp]) continue;
+		visit[tmp] = true;
+		--n;
+		for (int i = 0; i < rooms[tmp].size(); ++i) {
+			if(visit[rooms[tmp][i]]) continue;
+			q.push(rooms[tmp][i]);
+		}
+	}
+	return n ? false : true;
+}
+
+
 
 
 
