@@ -92,29 +92,6 @@ vector<vector<int>> palindromePairs(vector<string>& words) {
 	return ans;
 }
 
-int ans = 0;
-
-void solve(int blood,vector<int>& skill) {
-	if (blood <= 0) {
-		if (blood == 0) ++ans;
-		return;
-	}
-	for (int i = 0; i < 2; ++i) {
-		solve(blood - skill[i], skill);
-	}
-}
-
-int solve1(int blood, vector<int>& skill) {
-	vector<int> dp(blood + 1,0);
-	for (int i = 1; i <= blood; ++i) {
-		for (int j = 0;j < skill.size();++j){
-			if(i >= skill[j])
-				dp[i] = max(dp[i],dp[i - skill[j]] + 1);
-		}
-	}
-	return dp[blood];
-}\
-
 struct TreeInt {
 	int l, r, len;
 	TreeInt() :l(0), r(0), len(0) {}
@@ -149,9 +126,17 @@ string longestPalindrome(string s) {
 
 
 int main() {
-	vector<vector<int>> relation = { {0,2},{2,1},{3,4},{2,3},{1,4},{2,0},{0,4} };
+
+	vector<int> nums = { 2,5,6,1,8 };
+	string s;
 	CAlgorithmclass solve;
-	auto ans = solve.numWays(5,relation,3);
+	//auto ans = solve.isNumber(s);
+	while (true)
+	{
+		cin >> s;
+		auto ans = solve.isNumber(s);
+		cout << (ans ? "true" : "false") << std::endl;
+	}
 	return 0;
 }
 

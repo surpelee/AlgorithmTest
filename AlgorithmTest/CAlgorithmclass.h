@@ -1332,6 +1332,8 @@ public:
 	int findCircleNum(vector<vector<int>>& M);//朋友圈
 	int minJump(vector<int>& jump);//最小跳跃次数
 	bool canVisitAllRooms(vector<vector<int>>& rooms);//钥匙和房间
+	bool PredictTheWinner(vector<int>& nums);//预测玩家
+	bool isNumber(string s);
 
 private:
 	void back_findCircleNum1(vector<vector<int>>& M, vector<bool>& visit, int a);

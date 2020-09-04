@@ -7335,6 +7335,40 @@ bool CAlgorithmclass::canVisitAllRooms(vector<vector<int>>& rooms)
 	return n ? false : true;
 }
 
+bool CAlgorithmclass::PredictTheWinner(vector<int>& nums)
+{
+	
+	return false;
+}
+
+bool CAlgorithmclass::isNumber(string s) {
+	if (s.empty()) return false;
+	if (s.size() == 1 && (s[0] > '9'||s[0] < '0')) return false;
+	int eLoc = -1;
+	int pointLoc = -1;
+	for (int i = 1; i < s.size(); ++i) {
+		if ((s[i] == '+' || s[i] == '-') && (s[i - 1] != 'e' && s[i - 1] != 'E')) return false;
+		if ((s[i] >= 'a'&&s[i] <= 'z') || (s[i] >= 'A'&&s[i] <= 'Z')) {
+			if (s[i] != 'e' && s[i] != 'E') return false;
+			else if(eLoc == -1) {
+				eLoc = i;
+				continue;
+			}
+			else return false;
+		}
+		if (s[i] == '.') {
+			if (pointLoc == -1) {
+				if (s[i - 1] > '9' || s[i - 1] < '0') return false;
+				if (i + 1 < s.size() && (s[i + 1] > '9' || s[i + 1] < '0')) return false;
+				if (eLoc != -1 && i > eLoc) return false;
+				else pointLoc = i;
+			}
+			else return false;
+		}
+	}
+	return true;
+}
+
 
 
 
