@@ -20,6 +20,44 @@
 
 using namespace std;
 
+//并查集
+struct UnionFind {
+	vector<int> ancestor;
+	UnionFind(int n) {
+		ancestor.resize(n);
+		for (int i = 0; i < n; ++i)
+			ancestor[i] = i;
+	}
+
+	int find(int index) {
+		if (index != ancestor[index])
+			ancestor[index] = find(ancestor[index]);
+		return ancestor[index];
+		//return index == ancestor[index] ? index : ancestor[index] = find(ancestor[index]);
+	}
+
+	void merge(int u, int v) {
+		ancestor[find(u)] = find(v);
+	}
+};
+
+struct MinTreePrim //最小生成树所用的结构
+{
+	int val;
+	int lowCost;
+	MinTreePrim(){}
+	MinTreePrim(int _val,int _cost):val(_val),lowCost(_cost){}
+};
+
+struct Arc //最小生成树所用的结构
+{
+	int u;
+	int v;
+	int cost;//边的权值
+	Arc() :u(0), v(0), cost(-1) {}
+	Arc(int _u,int _v,int _c):u(_u),v(_v),cost(_c){}
+};
+
 struct good
 {
 	int w, v, s;
@@ -36,6 +74,15 @@ struct status {
 	ListNode *ptr;
 	bool operator < (const status& rhs) const {
 		return val > rhs.val;//重载小顶堆  // priority_queue默认是最大堆 堆重载符号为 <
+	}
+};
+
+struct minpair {
+	int i, j;
+	minpair() {}
+	minpair(int _i, int _j) :i(_i), j(_j) {}
+	bool operator < (const minpair& rhs) const {
+		return (i + j) < (rhs.i + rhs.j);
 	}
 };
 
@@ -1334,8 +1381,16 @@ public:
 	bool canVisitAllRooms(vector<vector<int>>& rooms);//钥匙和房间
 	bool PredictTheWinner(vector<int>& nums);//预测玩家
 	bool isNumber(string s);
+	vector<vector<int>> combinationSum(vector<int>& candidates, int target);//组合总和
+	int minTime(vector<int>& time, int m);//小张刷题计划
+	vector<int> maxNumber(vector<int>& nums1, vector<int>& nums2, int k);//拼接最大数
+	bool isSelfCrossing(vector<int>& x);//路径交叉
+	vector<vector<int>> kSmallestPairs(vector<int>& nums1, vector<int>& nums2, int k);//和最小的k对数字
+	vector<int> findRedundantDirectedConnection(vector<vector<int>>& edges);//冗余连接 II
 
 private:
+	bool check_minTime(vector<int>& time, int m, int mid);
+	void back_combinationSum(vector<int>& candidates, vector<int>& res,int target,int index);
 	void back_findCircleNum1(vector<vector<int>>& M, vector<bool>& visit, int a);
 	int back_findCircleNum(vector<int>& res, int i);
 	void back_letterCombinations(vector<string>& ans,vector<string>& hash,string& digits,string tmp,int a);
@@ -1451,6 +1506,11 @@ public:
 	int bag4(int N, int M, const vector<int>& w, const vector<int>& v, const vector<int>& s);//多重背包2
 	int bag5(int N, int M, const vector<int>& w, const vector<int>& v, const vector<int>& s);//混合背包
 	int bag6(int N, int V, int M, const vector<int>& v, const vector<int>& m, const vector<int>& w);//二维费用的背包问题
+
+	vector<pair<int, int>> MIniSpanTree_Kruskal(int cnt, vector<vector<int>>& adj);//最小生成树Kruskal
+	bool FindTree(int u,int v,vector<vector<int>>& Tree);
+
+	vector<pair<int, int>> MiniSpanTree_Prim(int cnt,vector<vector<int>>& adj, vector<MinTreePrim>& cntTree); //最小生成树Prim
 
 private:
 	int m_int, m_row, m_col;

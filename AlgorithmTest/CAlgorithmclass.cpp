@@ -7369,6 +7369,143 @@ bool CAlgorithmclass::isNumber(string s) {
 	return true;
 }
 
+vector<vector<int>> CAlgorithmclass::combinationSum(vector<int>& candidates, int target)
+{
+	m_intVtVt.clear();
+	vector<int> res;
+	back_combinationSum(candidates, res, target, 0);
+	return m_intVtVt;
+}
+
+int CAlgorithmclass::minTime(vector<int>& time, int m)
+{
+	if (time.size() <= m) return 0;
+	int l = 0, r = 0;
+	for (auto& t : time) r += t;
+	while (l<r){
+		int mid = l + (r - l) / 2;
+		if (check_minTime(time, m, mid)) r = mid - 1;
+		else l = mid + 1;
+	}
+	return l;
+}
+
+vector<int> CAlgorithmclass::maxNumber(vector<int>& nums1, vector<int>& nums2, int k)
+{
+	vector<int> ans(k, 0);
+	int n1 = nums1.size(), n2 = nums2.size();
+
+	auto fun = [&](vector<int>& v,int s) {
+		int n = v.size();
+		if (n <= s) return v;
+		vector<int> res;
+		int dint = n - s;
+		for (int i = 0; i < n; ++i) {
+			while (!res.empty() && v[i] > res.back() && dint-- > 0)
+				res.pop_back();
+			res.push_back(v[i]);
+		}
+		res.resize(s);
+		return res;
+	};
+	for (int s = max(0, k - n2); s <= min(k, n1); ++s) {
+		vector<int> tmp;
+		int i = 0, j = 0;
+		vector<int> tmp1 = fun(nums1,s);
+		vector<int> tmp2 = fun(nums2, k - s);
+
+		while (i < tmp1.size() && j < tmp2.size()) {
+			if (tmp1[i] < tmp2[j]) {
+				tmp.push_back(tmp2[j++]);
+			}
+			else {
+				tmp.push_back(tmp1[i++]);
+			}
+		}
+		while (i < tmp1.size()) {
+			tmp.push_back(tmp1[i++]);
+		}
+		while (j < tmp2.size()) {
+			tmp.push_back(tmp2[j++]);
+		}
+		long long x = 0, y = 0;
+		for (int i = 0; i < k; ++i) {
+			x = x * 10 + tmp[i];
+			y = y * 10 + ans[i];
+		}
+		ans = x > y ? tmp : ans;
+	}
+	return ans;
+}
+
+bool CAlgorithmclass::isSelfCrossing(vector<int>& x)
+{
+	if (x.size() <= 3) return false;
+	for (int i = 3; i < x.size(); ++i) {
+		if (i >= 3 && x[i] >= x[i - 2] && x[i - 1] <= x[i - 3]) return true;
+		if (i >= 4 && x[i] + x[i - 4] >= x[i - 2] && x[i - 1] == x[i - 3]) return true;
+		if (i >= 5 && x[i] + x[i - 4] >= x[i - 2] && x[i - 1] + x[i - 5] >= x[i - 3] && x[i - 2] > x[i - 4] && x[i - 3] > x[i - 1])
+			return true;
+	}
+	return false;
+}
+
+vector<vector<int>> CAlgorithmclass::kSmallestPairs(vector<int>& nums1, vector<int>& nums2, int k)
+{
+	int n1 = nums1.size();
+	int n2 = nums2.size();
+	priority_queue<minpair> q;
+	for (int i = 0; i < min(k, n1); ++i) {
+		for (int j = 0; j < min(k, n2); ++j) {
+			if (q.empty() || q.size() < k) q.push(minpair(nums1[i], nums2[j]));
+			else {
+				minpair tmp = q.top();
+				if (tmp.i + tmp.j <= nums1[i] + nums2[j]) continue;
+				q.pop();
+				q.push(minpair(nums1[i], nums2[j]));
+			}
+		}
+	}
+	vector<vector<int>> ans;
+	while (!q.empty()) {
+		minpair tmp = q.top();
+		q.pop();
+		ans.push_back({ tmp.i,tmp.j });
+	}
+	return ans;
+}
+
+vector<int> CAlgorithmclass::findRedundantDirectedConnection(vector<vector<int>>& edges)
+{
+	int n = edges.size();
+	UnionFind uf = UnionFind(n + 1);
+	vector<int> parents(n + 1);
+	for (int i = 1; i <= n; ++i)
+		parents[i] = i;
+	int cof = -1;
+	int cyc = -1;
+	for (int i = 0; i < n;++i) {
+		int node1 = edges[i][0], node2 = edges[i][1];
+		if (parents[node2] != node2) {
+			cof = i;
+		}
+		else {
+			parents[node2] = node1;
+			if (uf.find(node1) == uf.find(node2))
+				cyc = i;
+			else
+				uf.merge(node1, node2);
+		}
+	}
+	if (cof < 0) {
+		return edges[cyc];
+	}
+	vector<int> tmp = edges[cof];
+	if (cyc >= 0) {
+		return {parents[tmp[1]],tmp[1]};
+	}
+	return tmp;
+}
 
 
 
@@ -7380,6 +7517,49 @@ bool CAlgorithmclass::isNumber(string s) {
 
 
 
+
+
+
+
+bool CAlgorithmclass::check_minTime(vector<int>& time, int m, int mid)
+{
+	int curMax = 0;
+	int totleTime = 0;
+	int count = 1;
+	for (int i = 0; i < time.size(); ++i) {
+		int tmpTime = min(curMax, time[i]);
+		if (tmpTime + totleTime <= mid) {
+			totleTime += tmpTime;
+			curMax = max(curMax, time[i]);
+		}
+		else {
+			totleTime = 0;
+			++count;
+			curMax = time[i];
+		}
+	}
+	return count <= m;
+}
+
+void CAlgorithmclass::back_combinationSum(vector<int>& candidates, vector<int>& res,int target, int index)
+{
+	if (target <= 0) {
+		if (target == 0) {
+			m_intVtVt.push_back(res);
+		}
+		return;
+	}
+	if (index >= candidates.size()) {
+		return;
+	}
+	for (int i = index; i < candidates.size(); ++i) {
+		res.push_back(candidates[i]);
+		target -= candidates[i];
+		back_combinationSum(candidates, res, target, i);
+		target += candidates[i];
+		res.pop_back();
+	}
+}
 
 void CAlgorithmclass::back_findCircleNum1(vector<vector<int>>& M, vector<bool>& visit,int a)
 {
@@ -9044,6 +9224,97 @@ int CAlgorithmclass::bag6(int N, int V, int M, const vector<int>& v, const vecto
 		}
 	}
 	return dp[V][M];
+}
+
+vector<pair<int, int>> CAlgorithmclass::MIniSpanTree_Kruskal(int cnt,vector<vector<int>>& adj)//adj是邻接矩阵
+{
+	vector<pair<int, int>> ans;
+	vector<Arc> EdgeArc;
+	for (int i = 0; i < cnt; ++i) {
+		for (int j = 0; j < cnt; ++j) {
+			if (adj[i][j] != -1) {
+				EdgeArc.push_back(Arc(i,j,adj[i][j]));
+			}
+		}
+	}
+	sort(EdgeArc.begin(), EdgeArc.end(), [](Arc a, Arc b) {return a.cost < b.cost; });
+	vector<vector<int>> Tree(cnt);//cnt个独立的树
+	for (int i = 0; i < cnt; ++i) {
+		Tree[i].push_back(i);
+	}
+	for (int i = 0; i < EdgeArc.size(); ++i) {
+		int u = EdgeArc[i].u;
+		int v = EdgeArc[i].v;
+		if (FindTree(u, v, Tree)) {
+			cout << u << "----" << v << endl;
+			ans.push_back(make_pair(u,v));
+		}
+	}
+	return ans;
+}
+
+bool CAlgorithmclass::FindTree(int u, int v, vector<vector<int>>& Tree)
+{
+	int index_u = -1;
+	int index_v = -1;
+	for (int i = 0; i < Tree.size(); ++i) {
+		if (find(Tree[i].begin(), Tree[i].end(), u) != Tree[i].end())
+			index_u = i;
+		if (find(Tree[i].begin(), Tree[i].end(), v) != Tree[i].end())
+			index_v = i;
+	}
+	if (index_u != index_v) {
+		for (int i = 0; i < Tree[index_v].size(); ++i) {
+			Tree[index_u].push_back(Tree[index_v][i]);
+		}
+		Tree[index_v].clear();
+		return true;
+	}
+	return false;
+}
+
+vector<pair<int, int>> CAlgorithmclass::MiniSpanTree_Prim(int cnt, vector<vector<int>>& adj,vector<MinTreePrim>& cntTree)
+{
+	vector<pair<int, int>> ans;
+	cntTree.resize(cnt);
+	for (int i = 0; i < cnt; ++i) {
+		cntTree[i].lowCost = -1;
+	}
+	cntTree[0].val = 0;//从0节点开始
+	cntTree[0].lowCost = 0;
+	for (int i = 1; i < cnt; ++i) {
+		cntTree[i].val = 0;
+		cntTree[i].lowCost = adj[0][i];
+	}
+
+	auto minLowEdge = [&]() {
+		int imin = INT_MAX;
+		int index = -1;
+		for (int i = 0; i < cnt; ++i) {
+			int tmp = cntTree[i].lowCost;
+			if (tmp == -1) tmp = INT_MAX;
+			if (tmp < imin && tmp != 0) {
+				imin = tmp;
+				index = i;
+			}
+		}
+		return index;
+	};
+
+	int k = cnt - 1;
+	while (k--) {
+		int index = minLowEdge();
+		cout << index << "----" << cntTree[index].val<<endl;
+		ans.push_back(make_pair(index, cntTree[index].val));
+		cntTree[index].lowCost = 0;
+		for (int j = 0; j < cnt; ++j) {
+			if (adj[index][j] != -1 && (adj[index][j] < cntTree[j].lowCost || cntTree[j].lowCost == -1)) {
+				cntTree[j].lowCost = adj[index][j];
+				cntTree[j].val = index;
+			}
+		}
+	}
+	return ans;
 }
 
 

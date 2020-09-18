@@ -127,16 +127,20 @@ string longestPalindrome(string s) {
 
 int main() {
 
-	vector<int> nums = { 2,5,6,1,8 };
-	string s;
+	vector<vector<int>> adjMat(6,vector<int>(6,-1));
+	adjMat[0][1] = 6; adjMat[0][2] = 1; adjMat[0][3] = 5;
+	adjMat[1][0] = 6; adjMat[1][2] = 5; adjMat[1][4] = 3;
+	adjMat[2][0] = 1; adjMat[2][1] = 5; adjMat[2][3] = 5; adjMat[2][4] = 6; adjMat[2][5] = 4;
+	adjMat[3][0] = 5; adjMat[3][2] = 5; adjMat[3][5] = 2;
+	adjMat[4][1] = 3; adjMat[4][2] = 6; adjMat[4][5] = 6;
+	adjMat[5][2] = 4; adjMat[5][3] = 2; adjMat[5][4] = 6;
+
+	vector<MinTreePrim> cntTree;
+
+	vector<vector<int>> edges = { {1,2},{2,3},{3,4},{4,1},{1,5} };
 	CAlgorithmclass solve;
-	//auto ans = solve.isNumber(s);
-	while (true)
-	{
-		cin >> s;
-		auto ans = solve.isNumber(s);
-		cout << (ans ? "true" : "false") << std::endl;
-	}
+	auto ans = solve.findRedundantDirectedConnection(edges);
+	
 	return 0;
 }
 
