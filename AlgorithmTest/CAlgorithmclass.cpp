@@ -7541,7 +7541,7 @@ int CAlgorithmclass::help_minCameraCover(TreeNode * root)
 		m_int++;
 		return 1;
 	}
-	if (l == 1 || r == 1) return 1;
+	if (l == 1 || r == 1) return 2;
 	return -1;//逻辑上不会走到这里
 }
 
