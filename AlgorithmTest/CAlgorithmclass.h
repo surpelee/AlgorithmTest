@@ -1387,8 +1387,10 @@ public:
 	bool isSelfCrossing(vector<int>& x);//路径交叉
 	vector<vector<int>> kSmallestPairs(vector<int>& nums1, vector<int>& nums2, int k);//和最小的k对数字
 	vector<int> findRedundantDirectedConnection(vector<vector<int>>& edges);//冗余连接 II
+	int minCameraCover(TreeNode* root);//监控二叉树  //////////////////////////////////////////////////////比较有意思的二叉树，可多次看
 
 private:
+	int help_minCameraCover(TreeNode* root);
 	bool check_minTime(vector<int>& time, int m, int mid);
 	void back_combinationSum(vector<int>& candidates, vector<int>& res,int target,int index);
 	void back_findCircleNum1(vector<vector<int>>& M, vector<bool>& visit, int a);

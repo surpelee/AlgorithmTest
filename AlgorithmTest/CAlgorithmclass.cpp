@@ -7507,6 +7507,15 @@ vector<int> CAlgorithmclass::findRedundantDirectedConnection(vector<vector<int>>
 	return tmp;
 }
 
+int CAlgorithmclass::minCameraCover(TreeNode * root)
+{
+	if (!root) return 0;
+	int t = help_minCameraCover(root);
+	if (t == 0) {
+		m_int++;
+	}
+	return m_int;
+}
 
 
 
@@ -7520,6 +7529,21 @@ vector<int> CAlgorithmclass::findRedundantDirectedConnection(vector<vector<int>>
 
 
 
+
+
+int CAlgorithmclass::help_minCameraCover(TreeNode * root)
+{
+	if (!root) return 2;
+	int l = help_minCameraCover(root->left);
+	int r = help_minCameraCover(root->right);
+	if (l == 2 && r == 2) return 0;
+	if (l == 0 || r == 0) {
+		m_int++;
+		return 1;
+	}
+	if (l == 1 || r == 1) return 1;
+	return -1;//逻辑上不会走到这里
+}
 
 bool CAlgorithmclass::check_minTime(vector<int>& time, int m, int mid)
 {
