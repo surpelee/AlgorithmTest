@@ -1388,6 +1388,7 @@ public:
 	vector<vector<int>> kSmallestPairs(vector<int>& nums1, vector<int>& nums2, int k);//和最小的k对数字
 	vector<int> findRedundantDirectedConnection(vector<vector<int>>& edges);//冗余连接 II
 	int minCameraCover(TreeNode* root);//监控二叉树  //////////////////////////////////////////////////////比较有意思的二叉树，可多次看
+	TreeNode* insertIntoBST(TreeNode* root, int val);//二叉树的插入
 
 private:
 	int help_minCameraCover(TreeNode* root);

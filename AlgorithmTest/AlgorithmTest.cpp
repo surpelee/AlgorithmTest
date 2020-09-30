@@ -123,23 +123,31 @@ string longestPalindrome(string s) {
 	return s.substr(ans.l + 1, ans.len);
 }
 
+unordered_map<int, int> amap;
+int index;
 
+TreeNode* helper(vector<int>& postorder, int l, int r) {
+	if (l >= r) return nullptr;
+	TreeNode* root = new TreeNode(postorder[index]);
+	int tmp = amap[postorder[index]];
+	index--;
+	root->right = helper(postorder, tmp + 1, r);
+	root->left = helper(postorder, l, tmp);
+	return root;
+}
 
 int main() {
 
-	vector<vector<int>> adjMat(6,vector<int>(6,-1));
-	adjMat[0][1] = 6; adjMat[0][2] = 1; adjMat[0][3] = 5;
-	adjMat[1][0] = 6; adjMat[1][2] = 5; adjMat[1][4] = 3;
-	adjMat[2][0] = 1; adjMat[2][1] = 5; adjMat[2][3] = 5; adjMat[2][4] = 6; adjMat[2][5] = 4;
-	adjMat[3][0] = 5; adjMat[3][2] = 5; adjMat[3][5] = 2;
-	adjMat[4][1] = 3; adjMat[4][2] = 6; adjMat[4][5] = 6;
-	adjMat[5][2] = 4; adjMat[5][3] = 2; adjMat[5][4] = 6;
+	//CAlgorithmclass solve;
+	//auto ans = solve.findRedundantDirectedConnection(edges);
 
-	vector<MinTreePrim> cntTree;
-
-	vector<vector<int>> edges = { {1,2},{2,3},{3,4},{4,1},{1,5} };
-	CAlgorithmclass solve;
-	auto ans = solve.findRedundantDirectedConnection(edges);
+	vector<int> inorder = { 9,3,15,20,7 };
+	vector<int> postorder = { 9, 15, 7, 20, 3 };
+	for (int i = 0; i < inorder.size(); ++i) {
+		amap[inorder[i]] = i;
+	}
+	index = inorder.size() - 1;
+	TreeNode* root = helper(postorder, 0, postorder.size());
 	
 	return 0;
 }
