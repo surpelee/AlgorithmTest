@@ -1389,8 +1389,10 @@ public:
 	vector<int> findRedundantDirectedConnection(vector<vector<int>>& edges);//冗余连接 II
 	int minCameraCover(TreeNode* root);//监控二叉树  //////////////////////////////////////////////////////比较有意思的二叉树，可多次看
 	TreeNode* insertIntoBST(TreeNode* root, int val);//二叉树的插入
+	int maxDistance(vector<int>& position, int m);//两球之间的磁力
 
 private:
+	bool maxDistance_check(int mid, vector<int>& p, int m);
 	int help_minCameraCover(TreeNode* root);
 	bool check_minTime(vector<int>& time, int m, int mid);
 	void back_combinationSum(vector<int>& candidates, vector<int>& res,int target,int index);
