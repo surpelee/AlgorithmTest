@@ -7541,6 +7541,123 @@ int CAlgorithmclass::maxDistance(vector<int>& position, int m)
 	return ans;
 }
 
+int CAlgorithmclass::minDays(int n)
+{
+	//超时，使用队列纯计算
+	/*int day = 0;
+	queue<int> q;
+	q.push(n);
+	while (!q.empty()) {
+		int sSize = q.size();
+		for (int i = 0; i < sSize; ++i) {
+			int t = q.front();
+			q.pop();
+			if (t == 0) return day;
+			if (t > 0) q.push(t - 1);
+			if (t % 2 == 0) q.push(t - t / 2);
+			if (t % 3 == 0) {
+				int tmp = t - 2 * (t / 3);
+				if(tmp >= 0) q.push(tmp);
+			}
+		}
+		day++;
+	}
+	return 0;*/
+	if (n <= 1) return n;
+	if (m_map.find(n) != m_map.end()) return m_map[n];
+	return m_map[n] = min(n % 2 + 1 + minDays(n / 2), n % 3 + 1 + minDays(n / 3));
+}
+
+int CAlgorithmclass::minimumOperations(string leaves)
+{
+	//动态规划	dp[i][j] 表示第i个树叶 状态j的时候的最小次数 ,j分为三个状态，0，1，2对应r y r三种状态
+	/*int len = leaves.size();
+	vector<vector<int>> dp(len,vector<int>(3));
+	dp[0][0] = leaves[0] == 'y';
+	dp[0][1] = dp[0][2] = dp[1][2] = INT_MAX;
+	for (int i = 1; i < len; ++i) {
+		dp[i][0] = dp[i - 1][0] + int(leaves[i] == 'y');
+		dp[i][1] = min(dp[i - 1][0], dp[i - 1][1]) + int(leaves[i] == 'r');
+		if(i > 1)
+			dp[i][2] = min(dp[i - 1][2], dp[i - 1][1]) + int(leaves[i] == 'y');
+	}
+
+	return dp[len - 1][2];*/
+	//
+	/*假设窗口区间都变成y, 其他区间的y都变成r。然后设当前区间的y的个数为cur，长度为L,
+	总共的y的个数为cnt.则结果为：L - cur + cnt - cur.则为 cnt - 2 * cur + L.相当于 cnt - (2 * cur - L);
+	因为cnt是固定的因此等于求 2 * cur - L的最大值。 因为每次遇到一个字母不管是y还是r, 长度都是加1.又因为减L.
+	因此发现每次遇到多一个y则可以 + 1， 而遇到r则是 - 1.为了使得窗口最大。当cur不大于0时遇到r 则不减,
+	记录期间的最大值。区间的长度和范围不重要。我们只求的2 * cur - L的最大值。*/
+	int len = leaves.size();
+	int ans = 0;
+	if (leaves[0] == 'y') ++ans;
+	if (leaves[len - 1] == 'y') ++ans;
+	int cnt = 0;
+	for (int i = 1; i < len - 1; ++i) if (leaves[i] == 'y') ++cnt;
+	int cur = 0;
+	int imax = 0;
+	for (int i = 0; i < len - 1; ++i) {
+		if (leaves[i] == 'y') cur++;
+		else if (cur > 0) cur--;
+		imax = max(imax,cur);
+	}
+	return cnt - imax + ans;
+}
+
+vector<int> CAlgorithmclass::sumOfDistancesInTree(int N, vector<vector<int>>& edges)
+{
+	vector<vector<int>> dis(N, vector<int>(N, INT_MAX));
+	for (auto& edge : edges) {
+		dis[edge[0]][edge[1]] = 1;
+		dis[edge[1]][edge[0]] = 1;
+	}
+	for (int i = 0; i < N; ++i) dis[i][i] = 0;
+	int tmp = 0;
+	for (int i = 0; i < N; ++i) {
+		for (int j = 0; j < N; ++j) {
+			for (int k = 0; k < N; ++k) {
+				if (j == k) continue;
+				tmp = (dis[j][i] == INT_MAX || dis[i][k] == INT_MAX) ? INT_MAX : (dis[j][i] + dis[i][k]);
+				if (tmp < dis[j][k]) {
+					dis[j][k] = tmp;
+				}
+			}
+		}
+	}
+	vector<int> ans(N, 0);
+	for (int i = 0; i < N; ++i) {
+		int res = 0;
+		for (int j = 0; j < N; ++j) {
+			res += dis[i][j];
+		}
+		ans[i] = res;
+	}
+	return ans;
+}
+
+int CAlgorithmclass::getMinimumDifference(TreeNode * root)
+{
+	m_tree = nullptr;
+	m_int = INT_MAX;
+	dfs_getMinimumDifference(root);
+	return m_int;
+}
+
+vector<int> CAlgorithmclass::partitionLabels(string S)
+{
+	int r = 0,cnt = 0;
+	vector<int> hash(26, -1);
+	vector<int> ans;
+	for (int i = 0; i < S.size(); ++i) hash[int(S[i] - 'a')] = i;
+	for (int i = 0; i < S.size(); ++i) {
+		int t = S[i] - 'a';
+		cnt++;
+		if (r < hash[t]) r = hash[t];
+		if (i == r) { ans.push_back(cnt); cnt = 0; }
+	}
+	return ans;
+}
 
 
 
@@ -7554,6 +7671,16 @@ int CAlgorithmclass::maxDistance(vector<int>& position, int m)
 
 
 
+
+
+void CAlgorithmclass::dfs_getMinimumDifference(TreeNode * root)
+{
+	if (!root) return;
+	dfs_getMinimumDifference(root->left);
+	if (m_tree) m_int = min(m_int,abs(root->val - m_tree->val));
+	m_tree = root;
+	dfs_getMinimumDifference(root->right);
+}
 
 bool CAlgorithmclass::maxDistance_check(int mid, vector<int>& p, int m)
 {

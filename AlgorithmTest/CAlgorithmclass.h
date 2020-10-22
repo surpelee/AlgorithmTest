@@ -1390,8 +1390,14 @@ public:
 	int minCameraCover(TreeNode* root);//监控二叉树  //////////////////////////////////////////////////////比较有意思的二叉树，可多次看
 	TreeNode* insertIntoBST(TreeNode* root, int val);//二叉树的插入
 	int maxDistance(vector<int>& position, int m);//两球之间的磁力
+	int minDays(int n);//吃掉N个橘子的最少天数
+	int minimumOperations(string leaves);//秋叶收藏集
+	vector<int> sumOfDistancesInTree(int N, vector<vector<int>>& edges);//树中距离之和
+	int getMinimumDifference(TreeNode* root);//二叉搜索树的最小绝对差
+	vector<int> partitionLabels(string S);//划分字母区间
 
 private:
+	void dfs_getMinimumDifference(TreeNode* root);
 	bool maxDistance_check(int mid, vector<int>& p, int m);
 	int help_minCameraCover(TreeNode* root);
 	bool check_minTime(vector<int>& time, int m, int mid);
