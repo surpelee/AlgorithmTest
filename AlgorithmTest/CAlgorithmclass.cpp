@@ -7659,6 +7659,57 @@ vector<int> CAlgorithmclass::partitionLabels(string S)
 	return ans;
 }
 
+void CAlgorithmclass::nextPermutation(vector<int>& nums)
+{
+	int len = nums.size();
+	int fir = len - 1, sec = len - 1;
+	for (int i = len - 1; i > 0; --i) {
+		if (nums[i - 1] < nums[i]) {
+			fir = i - 1;
+			break;
+		}
+	}
+	if (fir == len - 1) {
+		QuickSort(nums, 0, len - 1);
+		return;
+	}
+	for (int i = len - 1; i >= 0; --i) {
+		if (nums[i] > nums[fir]) {
+			sec = i;
+			break;
+		}
+	}
+	swap(nums[fir], nums[sec]);
+	QuickSort(nums, fir + 1, len - 1);
+	return;
+}
+
+int CAlgorithmclass::findRotateSteps(string ring, string key)
+{
+	vector<vector<int>> hash(26);
+	for (int i = 0; i < ring.size(); ++i) {
+		int t = ring[i] - 'a';
+		hash[t].push_back(i);
+	}
+	int n = ring.size(), m = key.size();
+	vector<vector<int>> dp(m,vector<int>(n,INT_MAX));
+	for (auto& i : hash[key[0] - 'a']) {
+		dp[0][i] = min(i, n - i) + 1;
+	}
+	for (int i = 1; i < m; ++i) {
+		for (auto& j : hash[key[i] - 'a']) {
+			for (auto& k : hash[key[i - 1] - 'a']) {
+				dp[i][j] = min(dp[i][j], dp[i - 1][k] + min(abs(j - k), n - abs(j - k)) + 1);
+			}
+		}
+	}
+	int res = INT_MAX;
+	for (int i = 0; i < dp[m - 1].size(); ++i) res = min(res,dp[m - 1][i]);
+	return res;
+}
+
+
+
 
 
 

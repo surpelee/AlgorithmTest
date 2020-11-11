@@ -1395,6 +1395,8 @@ public:
 	vector<int> sumOfDistancesInTree(int N, vector<vector<int>>& edges);//树中距离之和
 	int getMinimumDifference(TreeNode* root);//二叉搜索树的最小绝对差
 	vector<int> partitionLabels(string S);//划分字母区间
+	void nextPermutation(vector<int>& nums);//下一个排列
+	int findRotateSteps(string ring, string key);//自由之路
 
 private:
 	void dfs_getMinimumDifference(TreeNode* root);

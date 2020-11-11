@@ -123,13 +123,53 @@ string longestPalindrome(string s) {
 	return s.substr(ans.l + 1, ans.len);
 }
 
+int mergecount(vector<long>& nums, int lower, int upper, int l, int r) {
+	if (l == r) return 0;
+	int mid = (l + r) / 2;
+	int left = mergecount(nums, lower, upper, l, mid);
+	int right = mergecount(nums, lower, upper, mid + 1, r);
+	int f = mid + 1, s = f;
+	int ans = left + right;
+	for (int i = l; i <= mid; ++i) {
+		while (s <= r && nums[s] <= nums[i] + lower) ++s;
+		while (f <= r && nums[f] <= nums[i] + upper) ++f;
+		ans += f - s;
+	}
+	vector<int> sort(r - l + 1);
+	int t = l;
+	int p = 0, k = mid + 1;
+	while (l <= mid || k <= r) {
+		if (l > mid) sort[p++] = nums[k++];
+		else if (k > r) sort[p++] = nums[l++];
+		else {
+			if (nums[k] > nums[l]) sort[p++] = nums[l++];
+			else sort[p++] = nums[k++];
+		}
+	}
+	for (int i = 0; i < sort.size(); ++i) {
+		nums[i + t] = sort[i];
+	}
+	return ans;
+}
+
+int countRangeSum(vector<int>& nums, int lower, int upper) {
+	long s = 0;
+	vector<long> sum{ 0 };
+	for (auto& v : nums) {
+		s += v;
+		sum.push_back(s);
+	}
+	return mergecount(sum, lower, upper, 0, sum.size() - 1);
+}
+
+
 
 int main() {
 
 	//CAlgorithmclass solve;
 	//auto ans = solve.findRedundantDirectedConnection(edges);
-
-	
+	vector<int> nums = { -2,5,-1 };
+	auto sa = countRangeSum(nums,-2,2);
 	
 	return 0;
 }
