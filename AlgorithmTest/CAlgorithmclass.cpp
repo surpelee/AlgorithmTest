@@ -7708,6 +7708,64 @@ int CAlgorithmclass::findRotateSteps(string ring, string key)
 	return res;
 }
 
+string CAlgorithmclass::removeKdigits(string num, int k)
+{
+	/*if (num.size() == k) return "0";
+	string res = '0' + num + '0';
+	for (int i = 1; i < res.size() - 1; ++i) {
+		if (res[i] == '0') continue;
+		if (!k) break;
+		if (res[i] >= res[i - 1] && res[i] >= res[i + 1]) {
+			res.erase(i, 1);
+			k--;
+			i--;
+		}
+	}
+	res.pop_back();
+	int i = 0;
+	while (i < res.size() && res[i] == '0') {
+		i++;
+	}
+	return i == res.size() ? "0" : res.substr(i);*/
+	//µ¥µ÷Õ»
+	vector<char> stk;
+	for (auto& d : num) {
+		while (stk.size() > 0 && stk.back() > d && k) {
+			stk.pop_back();
+			k--;
+		}
+		stk.push_back(d);
+	}
+	for (; k > 0; --k) stk.pop_back();
+	string ans = "";
+	bool flag = true;
+	for (auto& d : stk) {
+		if (flag && d == '0') continue;
+		flag = false;
+		ans += d;
+	}
+	return ans == "" ? "0" : ans;
+}
+
+int CAlgorithmclass::findMinArrowShots(vector<vector<int>>& points)
+{
+	if (points.empty()) return 0;
+	auto fun = [&](vector<int> a,vector<int> b) {
+		return a[0] < b[0];
+	};
+	sort(points.begin(),points.end(),fun);
+	int l = points[0][0], r = points[0][1];
+	int res = 1;
+	for (auto& t : points) {
+		if (t[0] > r) {
+			res++;
+			r = t[1];
+		}
+		else if(t[1] <= r) r = t[1];
+	}
+	return res;
+}
+
 
 
 

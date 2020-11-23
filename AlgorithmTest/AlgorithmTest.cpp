@@ -166,10 +166,9 @@ int countRangeSum(vector<int>& nums, int lower, int upper) {
 
 int main() {
 
-	//CAlgorithmclass solve;
-	//auto ans = solve.findRedundantDirectedConnection(edges);
-	vector<int> nums = { -2,5,-1 };
-	auto sa = countRangeSum(nums,-2,2);
+	CAlgorithmclass solve;
+	string num = "10200";
+	auto ans = solve.removeKdigits(num,2);
 	
 	return 0;
 }

@@ -20,6 +20,8 @@
 
 using namespace std;
 
+
+
 //并查集
 struct UnionFind {
 	vector<int> ancestor;
@@ -1396,7 +1398,9 @@ public:
 	int getMinimumDifference(TreeNode* root);//二叉搜索树的最小绝对差
 	vector<int> partitionLabels(string S);//划分字母区间
 	void nextPermutation(vector<int>& nums);//下一个排列
-	int findRotateSteps(string ring, string key);//自由之路
+	int findRotateSteps(string ring, string key);//自由之路    动态规划
+	string removeKdigits(string num, int k);//移掉K位数字
+	int findMinArrowShots(vector<vector<int>>& points);//用最少数量的箭引爆气球
 
 private:
 	void dfs_getMinimumDifference(TreeNode* root);
