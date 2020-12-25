@@ -9614,6 +9614,52 @@ vector<pair<int, int>> CAlgorithmclass::MiniSpanTree_Prim(int cnt, vector<vector
 	return ans;
 }
 
+void CAlgorithmclass::Dijkstra(vector<vector<int>>& adj, vector<int>& dis, int v, int e)
+{
+
+}
+
+int CAlgorithmclass::networkDelayTime(vector<vector<int>>& times, int N, int K) {
+	vector<int> dis(N + 1, INT_MAX);
+	vector<bool> visit(N + 1, false);
+	dis[K] = 0;
+	visit[K] = true;
+	vector<vector<good_dj>> adj(N + 1);
+	for (auto& t : times) {
+		adj[t[0]].push_back(good_dj(t[1], t[2]));
+	}
+	for (int i = 0; i < adj[K].size(); ++i) {
+		dis[adj[K][i].v] = adj[K][i].w;
+	}
+	int cnt = 1;
+	while (cnt < N) {
+		cnt++;
+		int min_tmp = INT_MAX;
+		int vertex = 0;
+		for (int j = 1; j < dis.size(); ++j) {
+			if (!visit[j] && min_tmp > dis[j]) {
+				min_tmp = dis[j];
+				vertex = j;
+			}
+		}
+		visit[vertex] = true;
+		for (int j = 0; j < adj[vertex].size(); ++j) {
+			if (adj[vertex][j].w + dis[vertex] < dis[adj[vertex][j].v])
+				dis[adj[vertex][j].v] = adj[vertex][j].w + dis[vertex];
+		}
+	}
+	int res = INT_MIN;
+	for (int i = 1; i < dis.size(); ++i) {
+		if (dis[i] == INT_MAX) return -1;
+		res = max(res, dis[i]);
+	}
+	return res;
+}
+
+
+
+
+
 
 
 
