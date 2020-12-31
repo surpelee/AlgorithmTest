@@ -1405,6 +1405,7 @@ public:
 	int findRotateSteps(string ring, string key);//自由之路    动态规划
 	string removeKdigits(string num, int k);//移掉K位数字
 	int findMinArrowShots(vector<vector<int>>& points);//用最少数量的箭引爆气球
+	int eraseOverlapIntervals(vector<vector<int>>& intervals);//无重叠区域
 
 private:
 	void dfs_getMinimumDifference(TreeNode* root);
